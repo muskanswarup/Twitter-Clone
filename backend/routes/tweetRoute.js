@@ -1,5 +1,5 @@
 import express from "express";
-import { createTweet, deleteTweet } from "../controllers/tweetController.js";
+import { createTweet, deleteTweet, likeOrDislike } from "../controllers/tweetController.js";
 import isAuthenticated from "../config/auth.js";
 
 const router = express.Router();
@@ -9,6 +9,7 @@ const router = express.Router();
 // router.route("/logout").get(logout);
 
 router.route("/create").post(isAuthenticated, createTweet);
-router.route("/delete/:id").delete(deleteTweet);
+router.route("/delete/:id").delete(isAuthenticated, deleteTweet);
+router.route("/like/:id").put(isAuthenticated, likeOrDislike);
 
 export default router;
