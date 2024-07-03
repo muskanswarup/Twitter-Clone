@@ -120,3 +120,34 @@ export const bookmark = async(req , res) => {
     }
 }
 
+export const getMyProfile = async(req , res) => {
+    try{
+        const id = req.params.id;
+        const user = await User.findById(id).select("-password");
+
+        return res.status(200).json({
+            user
+        });
+    }catch(error){
+        console.log(error);
+    }
+} 
+
+export const getOtherUsers = async(req, res) => {
+    try{
+        const {id} = req.params;
+        const otherUsers = await User.find({_id: {$ne:id}}).select("-password");
+
+        if(!otherUsers){
+            return res.status(401).json({
+                message: "Currently don't have any users."
+            })
+        };
+        return res.status(200).json({
+            otherUsers
+        });
+
+    }catch(error){
+        console.log(error);
+    }
+}
