@@ -74,11 +74,8 @@ export const likeOrDislike = async(req , res) => {
 }
 
 export const getAllTweets = async(req, res) => {
-    // loggedInUSer tweet + following's tweets
     try{
         const id = req.params.id;
-        // const userId = req.body.id;
-        // const userId = req.params.id;
         const loggedInUser = await User.findById(id);
         const loggedInUserTweets = await Tweet.find({userId: id});
         console.log("logged in's tweets : " + loggedInUserTweets);
@@ -97,3 +94,19 @@ export const getAllTweets = async(req, res) => {
    
 }
 
+export const getFollowingTweets = async(req, res) => {
+    try{
+        const id = req.params.id;
+        const loggedInUser = await User.findById(id);
+        const followingUserTweets = await Promise.all(loggedInUser.following.map((otherUsersId) => {
+            return Tweet.find({userId: otherUsersId});
+        }));
+        
+        return res.status(200).json({
+            tweets: [].concat(...followingUserTweets),
+            success: true
+        })
+    }catch(error){
+        console.log(error);
+    }
+}
