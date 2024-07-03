@@ -12,8 +12,12 @@ const tweetSchema = mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        extended: true
-    }
+        // extended: true
+    },
+    userDetails:{
+        type:Array,
+        default:[]
+    },
     
 } , {timestamps : true});
 
