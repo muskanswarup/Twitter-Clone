@@ -27,6 +27,10 @@ const userSchema = mongoose.Schema({
         type: Array,
         default: []
     },
+    bookmarks:{
+        type: Array,
+        default: []
+    }
 } , {timestamps : true});
 
 export const User = mongoose.model("User", userSchema);

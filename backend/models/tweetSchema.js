@@ -13,11 +13,8 @@ const tweetSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         extended: true
-    },
-    bookmarks:{
-        type: Array,
-        default: []
     }
+    
 } , {timestamps : true});
 
 export const Tweet = mongoose.model("Tweet", tweetSchema);
