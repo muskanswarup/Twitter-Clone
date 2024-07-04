@@ -1,25 +1,73 @@
+// import {createSlice} from "@reduxjs/toolkit";
+
+// const userSlice = createSlice({
+//     name: "user",
+//     initialState:{
+//         user: null,
+//         otherUsers:null,
+//         profile: null
+//     },
+//     reducers:{
+//         // Multiple actions
+//         getUser: (state,action) => {
+//             state.user = action.payload;
+//         },
+//         getOtherUsers: (state, action) => {
+//             state.otherUsers = action.payload;
+//         },
+//         getMyProfile: (state, action) => {
+//             state.profile = action.payload;
+//         },
+//         followingUpdate: (state, action) => {
+//             // Unfollow
+//             if(state.user.includes(action.payload)){
+//                 state.user.following = state.user.following.filter((itemId) => {
+//                     return itemId !== action.payload;
+//                 })
+//             }else{
+//                 // Follow
+//                 state.user.following.push(action.payload);
+//             }
+//         }
+//     }
+// });
+
+// export const {getUser, getOtherUsers , getMyProfile, followingUpdate} = userSlice.actions;
+// export default userSlice.reducer;
+
 import {createSlice} from "@reduxjs/toolkit";
 
 const userSlice = createSlice({
-    name: "user",
+    name:"user",
     initialState:{
-        user: null,
+        user:null,
         otherUsers:null,
-        profile: null
+        profile:null
     },
     reducers:{
-        // Multiple actions
-        getUser: (state,action) => {
+        // multiple actions
+        getUser:(state,action)=>{
             state.user = action.payload;
         },
-        getOtherUsers: (state, action) => {
+        getOtherUsers:(state,action)=>{
             state.otherUsers = action.payload;
         },
-        getMyProfile: (state, action) => {
+        getMyProfile:(state,action)=>{
             state.profile = action.payload;
+        },
+        followingUpdate:(state,action)=>{
+            // unfollow
+            if(state.user.following.includes(action.payload)){
+                state.user.following = state.user.following.filter((itemId)=>{
+                    return itemId !== action.payload;
+                })
+            }else{
+                // follow
+                state.user.following.push(action.payload);
+            }
         }
     }
 });
-
-export const {getUser, getOtherUsers , getMyProfile} = userSlice.actions;
+export const {getUser, getOtherUsers,getMyProfile,followingUpdate} = userSlice.actions;
 export default userSlice.reducer;
+
