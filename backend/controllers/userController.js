@@ -2,7 +2,7 @@ import { User } from "../models/userSchema.js";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-export const Register = async(req, res) => {
+export const Register = async (req, res) => {
     try{
         const {name, username, email, password} = req.body;
 
@@ -77,6 +77,7 @@ export const Login = async (req , res ) => {
 
         return res.status(201).cookie("token" , token , {expiresIn: "1d" , httpOnly:true}).json({
             message: `Welcome back ${user.name}`,
+            user,
             success: true
         });
 
@@ -92,7 +93,7 @@ export const logout = (req, res) => {
     })
 };
 
-export const bookmark = async(req , res) => {
+export const bookmark = async (req , res) => {
     try{
         const loggedInUserId = req.body.id;
         const tweetId = req.params.id;
@@ -120,20 +121,32 @@ export const bookmark = async(req , res) => {
     }
 }
 
-export const getMyProfile = async(req , res) => {
-    try{
+// export const getMyProfile = async (req , res) => {
+//     try{
+//         const id = req.params.id;
+//         const user = await User.findById(id).select("-password");
+
+//         return res.status(200).json({
+//             user,
+//         })
+//     }catch(error){
+//         console.log(error);
+//     }
+// } 
+
+export const getMyProfile = async (req, res) => {
+    try {
         const id = req.params.id;
         const user = await User.findById(id).select("-password");
-
         return res.status(200).json({
-            user
-        });
-    }catch(error){
+            user,
+        })
+    } catch (error) {
         console.log(error);
     }
-} 
+};
 
-export const getOtherUsers = async(req, res) => {
+export const getOtherUsers = async (req, res) => {
     try{
         const {id} = req.params;
         const otherUsers = await User.find({_id: {$ne:id}}).select("-password");
@@ -152,7 +165,7 @@ export const getOtherUsers = async(req, res) => {
     }
 }
 
-export const follow = async(req, res) => {
+export const follow = async (req, res) => {
     try{
         const loggedInUserId = req.body.id;
         const userId = req.params.id;
@@ -178,7 +191,7 @@ export const follow = async(req, res) => {
     }
 }
 
-export const unfollow = async(req , res) => {
+export const unfollow = async (req , res) => {
     try{
         const loggedInUserId = req.body.id;
         const userId = req.params.id;

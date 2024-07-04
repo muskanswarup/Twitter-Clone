@@ -2,8 +2,13 @@ import React from "react";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { Link } from "react-router-dom";
 import Avatar from "react-avatar";
+import useGetProfile from "../hooks/useGetProfile";
+import { useSelector } from "react-redux";
 
 const Profile = () => {
+    const {user} = useSelector(store => store.user);
+    useGetProfile(user?._id);
+
   return (
     <div className="w-[50%] border-l border-r border-gray-200">
       <div>
