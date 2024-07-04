@@ -1,8 +1,34 @@
 import React from "react";
 import Avatar from "react-avatar";
 import { FaComment, FaHeart, FaBookmark } from "react-icons/fa";
+import axios from "axios";
+import {TWEET_API_END_POINT} from "../utils/constant";
+import {useDispatch, useSelector} from "react-redux";
+import toast from "react-hot-toast";
+import {getRefresh} from  "../redux/tweetSlice";
 
 const Tweet = ({tweet}) => {
+
+  const {user} = useSelector(store => store.user);
+  const dispatch = useDispatch();
+
+  const likeOrDislikeHandler = async (id) => {
+    try{
+      const res = await axios.put(`${TWEET_API_END_POINT}/like/${id}` , {id:user?._id} , {
+        withCredentials: true
+      })
+      
+      dispatch(getRefresh());
+      toast.success(res.data.message);
+
+
+    }catch(error){
+      toast.error(error.response.data.message);
+
+      console.log(error);
+    }
+  }
+
   return (
     <div className="border-b border-gray-200">
       <div>
@@ -27,13 +53,13 @@ const Tweet = ({tweet}) => {
                     <div className="p-2 cursor-pointer hover:bg-gray-300 rounded-full">
                     <FaComment/>
                     </div>
-                    <p >{tweet?.like?.length}</p>
+                    <p >0</p>
                 </div>
                 <div className="flex items-center">
-                    <div className="p-2 cursor-pointer hover:bg-gray-300 rounded-full">
+                    <div onClick={() => likeOrDislikeHandler(tweet?._id)} className="p-2 cursor-pointer hover:bg-gray-300 rounded-full">
                     <FaHeart/>
                     </div>
-                    <p >0</p>
+                    <p >{tweet?.like?.length}</p>
                 </div>
                 <div className="flex items-center">
                     <div className="p-2 cursor-pointer hover:bg-gray-300 rounded-full">

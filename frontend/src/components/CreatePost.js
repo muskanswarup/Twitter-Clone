@@ -29,6 +29,7 @@ const CreatePost = () => {
       toast.error(error.response.data.message);
       console.log(error);
     }
+    setDescription("");
   }
 
   return (
