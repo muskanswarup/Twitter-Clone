@@ -1,13 +1,15 @@
 import React from "react";
 import { IoMdArrowRoundBack } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Avatar from "react-avatar";
 import useGetProfile from "../hooks/useGetProfile";
 import { useSelector } from "react-redux";
 
 const Profile = () => {
+
     const {user, profile} = useSelector(store => store.user);
-    useGetProfile(user?._id);
+    const {id} = useParams();
+    useGetProfile(id);
 
   return (
     <div className="w-[50%] border-l border-r border-gray-200">
@@ -25,7 +27,7 @@ const Profile = () => {
           src="https://pbs.twimg.com/profile_banners/973770115442446338/1707460366/1080x360"
           alt="banner"
         />
-        <div className="absolute border-4 ml-2 border-white rounded-full top-52">
+        <div className="absolute border-4 ml-2 border-white rounded-full top-40">
         <Avatar src="https://4kwallpapers.com/images/wallpapers/lisa-blackpink-thai-singer-asian-girl-k-pop-singer-2048x2048-3232.jpg" size="120" round={true} />
         </div>
         <div className="text-right m-4">

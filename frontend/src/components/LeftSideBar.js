@@ -5,8 +5,11 @@ import { IoMdNotifications } from "react-icons/io";
 import { FaUser } from "react-icons/fa";
 import { IoLogOut } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const LeftSideBar = () => {
+  const {user} = useSelector(store => store.user);
+
   return (
     <div className="w-[20%]">
       <div>
@@ -40,7 +43,7 @@ const LeftSideBar = () => {
             <h1 className="font-bold ml-2">Notifications</h1>
           </div>
 
-            <Link to="/profile" className="flex items-center my-2 px-4 py-2 hover:bg-gray-200 rounded-full hover:cursor-pointer">
+            <Link to={`/profile/${user?._id}`} className="flex items-center my-2 px-4 py-2 hover:bg-gray-200 rounded-full hover:cursor-pointer">
             <div>
               <FaUser  size={"20px"}/>
             </div>

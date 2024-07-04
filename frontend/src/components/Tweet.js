@@ -2,7 +2,7 @@ import React from "react";
 import Avatar from "react-avatar";
 import { FaComment, FaHeart, FaBookmark } from "react-icons/fa";
 
-const Tweet = () => {
+const Tweet = ({tweet}) => {
   return (
     <div className="border-b border-gray-200">
       <div>
@@ -14,12 +14,12 @@ const Tweet = () => {
           />
           <div className=" ml-2 w-full"> 
             <div className="flex items-center">
-              <h1 className="font-bold ">Patel</h1>
-              <p className="text-gray-500 text-sm ml-1">@patelmernstack . 1m</p>
+              <h1 className="font-bold ">{tweet?.userDetails[0]?.name}</h1>
+              <p className="text-gray-500 text-sm ml-1">{`@${tweet?.userDetails[0]?.username} .1m`}</p>
             </div>
 
             <div>
-                <p>Hello developers! Let's connect and grow together.</p>
+                <p>{tweet?.description}</p>
             </div>
 
             <div className="flex justify-between my-3">
@@ -27,7 +27,7 @@ const Tweet = () => {
                     <div className="p-2 cursor-pointer hover:bg-gray-300 rounded-full">
                     <FaComment/>
                     </div>
-                    <p >0</p>
+                    <p >{tweet?.like?.length}</p>
                 </div>
                 <div className="flex items-center">
                     <div className="p-2 cursor-pointer hover:bg-gray-300 rounded-full">

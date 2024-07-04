@@ -4,13 +4,15 @@ import RightSideBar from './RightSideBar'
 import { Outlet } from 'react-router-dom'
 import useOtherUsers from '../hooks/userOtherUsers'
 import { useSelector } from 'react-redux'
+import useGetMyTweets from '../hooks/useGetMyTweets'
 
 const Home = () => {
+  const {user, otherUsers} = useSelector(store => store.user);
+
 
   // Custom hooks
-  const {user, otherUsers} = useSelector(store => store.user);
   useOtherUsers(user?._id);
-  
+  useGetMyTweets(user?._id);
 
   return (
     <div className='flex justify-between w-[80%] mx-auto'>
