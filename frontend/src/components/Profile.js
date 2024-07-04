@@ -6,7 +6,7 @@ import useGetProfile from "../hooks/useGetProfile";
 import { useSelector } from "react-redux";
 
 const Profile = () => {
-    const {user} = useSelector(store => store.user);
+    const {user, profile} = useSelector(store => store.user);
     useGetProfile(user?._id);
 
   return (
@@ -17,7 +17,7 @@ const Profile = () => {
             <IoMdArrowRoundBack size={"20px"}/>
           </Link>
           <div className="ml-2">
-            <h1 className="font-bold text-lg">Patel</h1>
+            <h1 className="font-bold text-lg">{profile?.name}</h1>
             <p className="text-gray-600 text-sm">10 Posts</p>
           </div>
         </div>
@@ -32,8 +32,8 @@ const Profile = () => {
           <button className="px-4 py-1 rounded-full  border-2 border-gray-300 hover:bg-gray-200 ">Edit Profile</button>
         </div>
         <div className="m-4">
-          <h1 className="font-bold text-xl">Patel</h1>
-          <p className="text-sm text-gray-500">@mernstackpatel</p>
+          <h1 className="font-bold text-xl">{profile?.name}</h1>
+          <p className="text-sm text-gray-500">{`@${profile?.username}`}</p>
         </div>
         <div className=" m-4">
           <p>Sharing about AI, business, and productivity. Ready to work together on launching AI products? DM for paid collabs</p>
