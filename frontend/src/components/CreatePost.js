@@ -5,12 +5,13 @@ import axios from "axios";
 import {TWEET_API_END_POINT} from "../utils/constant";
 import toast from "react-hot-toast";
 import {useDispatch, useSelector} from 'react-redux';
-import { getAllTweets, getRefresh } from "../redux/tweetSlice";
+import {getIsActive, getRefresh } from "../redux/tweetSlice";
 
 const CreatePost = () => {
  
   const [description, setDescription] = useState("");
   const {user} = useSelector(store => store.user);
+  const {isActive} = useSelector(store => store.tweet);
   const dispatch = useDispatch();
 
   const submitHandler = async (e) => {
@@ -32,27 +33,23 @@ const CreatePost = () => {
     setDescription("");
   }
 
-  const followingTweetHandler = async () => {
-    const id = user?._id;
-    try{
-      const res = await axios.get(`${TWEET_API_END_POINT}/followingtweets/${id}` , {
-        withCredentials: true
-      });
-      // console.log(res);
-      dispatch(getAllTweets(res.data.tweets));
-    }catch(error){
-      console.log(error);
-    }
+  const forYouHandler = () => {
+    dispatch(getIsActive(true))
   }
+
+  const followingHandler = () => {
+    dispatch(getIsActive(false))
+  }
+ 
 
   return (
     <div className="w-[100%] ">
       <div >
         <div className="flex items-center justify-evenly border-b border-gray-200">
-          <div className="cursor-pointer hover:bg-gray-200 w-full text-center px-4 py-2">
+          <div onClick={forYouHandler} className={`${isActive ? "border-b-4 border-[#1D9BF0]" : "null"} cursor-pointer hover:bg-gray-200 w-full text-center px-4 py-2`}>
             <h1 className="text-gray-600 font-semibold text-lg ">For you</h1>
           </div>
-          <div onClick={followingTweetHandler}  className="cursor-pointer  hover:bg-gray-200 w-full text-center px-4 py-2">
+          <div onClick={followingHandler} className={`${!isActive ? "border-b-4 border-[#1D9BF0]" : "null"} cursor-pointer hover:bg-gray-200 w-full text-center px-4 py-2`}>
             <h1 className="text-gray-600 font-semibold text-lg ">Following</h1>
           </div>
         </div>
